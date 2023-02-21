@@ -1,0 +1,34 @@
+# Hyperparameters for low-augmentation COCO training from scratch
+# python train.py --batch 64 --cfg yolov5n6.yaml --weights '' --data coco.yaml --img 640 --epochs 300 --linear
+
+lr0: 0.01  # 初始学习率，(SGD=1E-2, Adam=1E-3)
+lrf: 0.01  # 动态学习率系数,lr=lr0 * lrf
+momentum: 0.937  # SGD momentum/Adam beta1 学习率动量
+weight_decay: 0.0005  # 权重衰减系数
+warmup_epochs: 3.0  # 预热训练轮数(fractions ok)
+warmup_momentum: 0.8  # 预热训练初始动量
+warmup_bias_lr: 0.1  # 预热训练偏置的学习率
+box: 0.05  # 损失加和时定位损失采用的权重
+cls: 0.5  # 损失加和时分类损失采用的权重
+cls_pw: 1.0  # cls BCELoss正样本权重
+obj: 1.0  # 损失加和时置信度损失采用的权重 (scale with pixels)
+obj_pw: 1.0  # obj BCELoss 正样本权重
+iou_t: 0.20  # IoU训练时的阈值
+anchor_t: 4.0  # 匹配正样本时高宽比的限制值
+# anchors: 3  # anchors per output layer (0 to ignore)
+
+#数据增强参数：颜色空间和图片空间
+fl_gamma: 0.0  # focal loss gamma (efficientDet default gamma=1.5)
+hsv_h: 0.015  # 色调 (fraction)
+hsv_s: 0.7  # 饱和度 HSV-Saturation augmentation (fraction)
+hsv_v: 0.4  # 亮度 HSV-Value augmentation (fraction)
+degrees: 0.0  # 旋转角度 (+/- deg)
+translate: 0.1  # 平移 (+/- fraction)
+scale: 0.5  # 缩放 (+/- gain)
+shear: 0.0  # 剪切 (+/- deg)
+perspective: 0.0  # 透明度 (+/- fraction), range 0-0.001
+flipud: 0.0  # 上下翻转概率 (probability)
+fliplr: 0.5  # 左右翻转概率 (probability)
+mosaic: 1.0  # 进行Mosaic的概率 (probability)
+mixup: 0.0  # mixup (probability)
+copy_paste: 0.0  # segment copy-paste (probability)
