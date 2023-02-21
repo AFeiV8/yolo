@@ -907,7 +907,7 @@ def NMS(boxes, scores, iou_thres, GIoU=False, DIoU=False, CIoU=False, EIOU=False
         iou = bbox_iou(boxes[index, :], boxes[B[1:], :], xywh=False, GIoU=GIoU, DIoU=DIoU, CIoU=CIoU, EIOU=EIOU)
         '''找到符合阈值的索引：torch.nonzero：非零元素定位:返回非零的准确位置，每个列向量表示其维度上位置的坐标点，
         # bool.shape(n-1,1)---nonzero--->2*（index,0).reshape---->(2*(n-1)),data(index1,0,index2,0,......)'''
-        inds = torch.nonzero(iou <= iou_thres).reshape(-1)  # 拿到下一轮要用的值的索引
+        inds = torch.nonzero(torch.Tensor(iou <= iou_thres)).reshape(-1)  # 拿到下一轮要用的值的索引
         B = B[inds + 1]  # (index+1,1)还原到B的尺度上，相当于除去了第一项以及大于iou值的部分
     return torch.tensor(keep)
 
@@ -1013,7 +1013,7 @@ def non_max_suppression(
         c = x[:, 5:6] * (0 if agnostic else max_wh)  # classes
         boxes, scores = x[:, :4] + c, x[:, 4]  # boxes (offset by class), scores
         # i = torchvision.ops.nms(boxes, scores, iou_thres)  # NMS
-        i = NMS(boxes, scores, iou_thres, DIoU=True)
+        i = NMS(boxes, scores, iou_thres, DIoU=True).to(device)
         if i.shape[0] > max_det:  # limit detections
             i = i[:max_det]
         if merge and (1 < n < 3E3):  # Merge NMS (boxes merged using weighted mean)
