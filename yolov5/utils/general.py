@@ -946,7 +946,8 @@ def non_max_suppression(
     # min_wh = 2  # (pixels) minimum box width and height
     max_wh = 7680  # （像素）最大框宽度和高度
     max_nms = 1000  # 送入torchvision.ops.nms()的最大anchor个数
-    time_limit = 0.5 + 0.05 * bs  # nms的最大进行时间
+    # time_limit = 0.5 + 0.05 * bs  # nms的最大进行时间
+    time_limit = 99999
     redundant = True  #
     multi_label &= nc > 1  # multiple labels per box (adds 0.5ms/img)
     merge = False  # use merge-NMS
